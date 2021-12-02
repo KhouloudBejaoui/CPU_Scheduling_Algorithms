@@ -1,0 +1,6 @@
+
+#NumProcessus	#Tems d'arrivée		#Durée d'execution		#Priorité
+
+p1			1			5			   1
+p2			0			7			   2
+p3			5			1			   3
