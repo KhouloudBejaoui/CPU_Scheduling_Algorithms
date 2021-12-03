@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	fichier = fopen(argv[1], "r+");
 
 	struct dirent *dir;
-	DIR *d = opendir("./politiques/src");
+	DIR *d = opendir("./politiques/build");
 
 	if (fichier != NULL)
 	{
@@ -46,23 +46,17 @@ int main(int argc, char *argv[])
 
 		} while (fgetc(fichier) != EOF);
 
+
 		//liste dynamique
 
-		//char **tab = NULL;
-		//tab = malloc(10 * sizeof(char *));
-		//int k = 0;
 		if (d)
 		{
 			printf("Menu: \n");
 			while ((dir = readdir(d)) != NULL)
 			{
-				if (strstr(dir->d_name, ".") == NULL)
+			if (strstr(dir->d_name, ".") == NULL)
 				{
 					printf("-%s\n", dir->d_name);
-
-					/*tab[k] = (dir->d_name);
-					printf("-%s\n", tab[k]);
-					k++;*/
 				}
 			}
 			closedir(d);
@@ -74,7 +68,7 @@ int main(int argc, char *argv[])
 		printf("choisir une politique");
 		scanf("%d", &cl);
 		
-		switch (cl)
+		/*switch (cl)
 		{
 		case 1:
 			Fifo(nb, proc);
@@ -90,7 +84,7 @@ int main(int argc, char *argv[])
 		default:
 			Fifo(nb, proc);
 			printf("fifo");
-		}
+		}*/
 	}
 	else
 	{
