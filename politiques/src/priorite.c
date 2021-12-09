@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include "processus.h"
 
-void Sjf(int nb, process *proc)
+void priorite(int nb, process *proc)
 {
 
-	int i,j,curr_time = 0, min = 0,rotation = 0;
+	int i, j, curr_time = 0, rotation = 0, max = 0;
+
 	process permut, *procAffichage;
 	procAffichage = (process *)malloc(sizeof(process) * nb); //tab dynamique
 
@@ -23,20 +24,20 @@ void Sjf(int nb, process *proc)
 
 	printf("\n");
 	/*Afficher l'ordonnancement appliqué*/
-	printf("****Ordonnancement SJF****\n");
+	printf("****Ordonnancement priorité****\n");
 	printf("\n");
 	/*Afficher la date d'arrivee, le temps d'execution et la priorité de chaque processus*/
 	printf("\t ");
 	printf("Processus\t Ta\t Te\t Pr\n");
 	printf("\n");
-	
 	for (i = 0; i < nb; i++)
-	{printf("\t ");
+	{
+		printf("\t ");
 		printf("P%d\t\t %dms \t %dms\t %d\n", proc[i].idProcessus, proc[i].Ta, proc[i].Te, proc[i].Pr);
 	}
 	printf("\n");
 	/*afficher lA DATE DE FIN D'EXECUTION DE CHAQUE  processuss*/
-	printf("****Date de debut et de fin d'execution des %d processus****\n", nb);
+	printf("****date de debut et de fin d'execution des %d processus****\n", nb);
 	printf("\n");
 	printf("\t ");
 	printf("Processus\t Tdeb\t Tfin\n");
@@ -48,15 +49,15 @@ void Sjf(int nb, process *proc)
 	proc[0].termine = 1;
 	proc[0].temfin = proc[0].Te + proc[0].Ta;
 	proc[0].temAttente = 0;
-	curr_time = proc[0].temfin;
 
+	curr_time = proc[0].temfin;
+	// Increase the current time by the termine process time
+	printf("\t ");
+	printf("P%d\t\t %dms --> %dms\t\n", proc[0].idProcessus, proc[0].Ta, proc[0].temfin);
 	procAffichage[0].idProcessus = proc[0].idProcessus;
 	procAffichage[0].Ta = proc[0].Ta;
 	procAffichage[0].Te = proc[0].Te;
 	procAffichage[0].temfin = proc[0].temfin;
-	// Increase the current time by the termine process time
-	printf("\t ");
-	printf("P%d\t\t %dms --> %dms\t\n", proc[0].idProcessus, proc[0].Ta, proc[0].temfin);
 	/* Repeat the number of processes -1 */
 	for (i = 1; i < nb; i++)
 	{
@@ -71,7 +72,7 @@ void Sjf(int nb, process *proc)
 			/* If the process has not yet termine */
 			else
 			{
-				min = j;
+				max = j;
 				// Initialize the min variable
 				break;
 				// escape loop
@@ -81,31 +82,30 @@ void Sjf(int nb, process *proc)
 		/* Repeat the number of processes -1 */
 		for (j = 1; j < nb; j++)
 		{
-			/* Search for processes with minimum working time */
-			if ((proc[j].termine == 0) && (proc[j].Ta <= curr_time) && (proc[j].Te < proc[min].Te))
+			/* Search for processes with maximum priority*/
+			if ((proc[j].termine == 0) && (proc[j].Ta <= curr_time) && (proc[j].Pr > proc[max].Pr))
 			{
-				min = j;
-				// update the minimum working process
+				max = j;
+				// update the maximum working process
 			}
 		}
 
-		proc[min].temAttente = curr_time - proc[min].Ta;
+		proc[max].temAttente = curr_time - proc[max].Ta;
 		// Calculate the waiting time of the process to run
-		proc[min].termine = 1;
+		proc[max].termine = 1;
 		// change the execution process completion state
 
-		curr_time += proc[min].Te;
+		curr_time += proc[max].Te;
 		// Incremented by the execution time of the current time process
 
-		proc[min].temfin = curr_time;
+		proc[max].temfin = curr_time;
 		// Calculate process return time
 		printf("\t ");
-		printf("P%d\t\t %dms --> %dms\t\n", proc[min].idProcessus, proc[min].Ta + proc[min].temAttente, proc[min].temfin);
-
-		procAffichage[i].idProcessus = proc[min].idProcessus;
-		procAffichage[i].Ta = proc[min].Ta;
-		procAffichage[i].Te = proc[min].Te;
-		procAffichage[i].temfin = proc[min].temfin;
+		printf("P%d\t\t %dms --> %dms\t\n", proc[max].idProcessus, proc[max].Ta + proc[max].temAttente, proc[max].temfin);
+		procAffichage[i].idProcessus = proc[max].idProcessus;
+		procAffichage[i].Ta = proc[max].Ta;
+		procAffichage[i].Te = proc[max].Te;
+		procAffichage[i].temfin = proc[max].temfin;
 	}
 	printf("\n");
 	printf("****Diagramme de GANTT****\n");
@@ -122,7 +122,6 @@ void Sjf(int nb, process *proc)
 
 	printf("\n\t|");
 
-
 	for (i = 0; i < nb; i++)
 	{
 		for (j = 0; j < procAffichage[i].Te - 1; j++)
@@ -137,7 +136,6 @@ void Sjf(int nb, process *proc)
 	}
 
 	printf("\n\t ");
-
 
 	for (i = 0; i < nb; i++)
 	{
@@ -169,5 +167,5 @@ int main(int argc, char *argv[])
 	extraction(&proc, argv[1]);
 	nb = Nombre_processus(argv[1]);
 
-	Sjf(nb, proc);
+	priorite(nb, proc);
 }
