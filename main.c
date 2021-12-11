@@ -18,19 +18,24 @@ int main(int argc, char *argv[])
 
 	if (d)
 	{
-		printf("   Menu: \n");
+    printf("\t+-----------------------+\n");
+    printf("\t|\t  Menu\t\t|\n");
+    printf("\t+-----------------------+\n");
+	printf("\t|\t\t\t|\n");
 		while ((dir = readdir(d)) != NULL)
 		{
 			if (strstr(dir->d_name, ".") == NULL)
 			{
-				printf("     %d", i);
+				printf("\t\t%d", i);
 				printf("-%s\n", dir->d_name);
 				i++;
 				tab[k] = dir->d_name;
 				k++;
+				printf("\t|\t\t\t|\n");
 			}
 		}
 		closedir(d);
+    printf("\t+-----------------------+\n");
 	}
 
 	//choisir à partir du clavier
