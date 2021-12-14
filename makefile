@@ -13,6 +13,10 @@ CC := gcc
 
 # % compiler tous les fichiers .c en des fichiers executables
 all: $(SRC_FILES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%) main
+#attribution des droits (read, write et execute pour Owner / read et execute pour group et other)
+	chmod 755 $(SRC_FILES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%) main 
+	
+
 main: main.c 
 	$(CC) $(CFLAGS) main.c  -o main
 

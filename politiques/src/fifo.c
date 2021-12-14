@@ -35,7 +35,7 @@ void Fifo(int nb, process *proc)
 	}
 	printf("\n");
 	/*afficher lA DATE DE FIN D'EXECUTION DE CHAQUE  processuss*/
-	printf("****date de debut et de fin d'execution des %d processus****\n", nb);
+	printf("****Date de debut et de fin d'execution des %d processus****\n", nb);
 	printf("\n");
 	printf("\t ");
 	printf("Processus\t Tdeb\t Tfin\n");
@@ -72,6 +72,7 @@ void Fifo(int nb, process *proc)
 		procAffichage[i].Te = proc[i].Te;
 		procAffichage[i].temfin = proc[i].temfin;
 	}
+	//diagramme de gantt
 	printf("\n");
 	printf("****Diagramme de GANTT****\n");
 	printf("\n");

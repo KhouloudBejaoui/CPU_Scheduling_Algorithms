@@ -5,7 +5,7 @@
 void Sjf(int nb, process *proc)
 {
 
-	int i,j,curr_time = 0, min = 0,rotation = 0;
+	int i, j, curr_time = 0, min = 0, rotation = 0;
 	process permut, *procAffichage;
 	procAffichage = (process *)malloc(sizeof(process) * nb); //tab dynamique
 
@@ -29,9 +29,10 @@ void Sjf(int nb, process *proc)
 	printf("\t ");
 	printf("Processus\t Ta\t Te\t Pr\n");
 	printf("\n");
-	
+
 	for (i = 0; i < nb; i++)
-	{printf("\t ");
+	{
+		printf("\t ");
 		printf("P%d\t\t %dms \t %dms\t %d\n", proc[i].idProcessus, proc[i].Ta, proc[i].Te, proc[i].Pr);
 	}
 	printf("\n");
@@ -44,7 +45,7 @@ void Sjf(int nb, process *proc)
 
 	/*Calcul*/
 
-	/* Calculate the time of the first running process */
+	/* calcul du 1er processus */
 	proc[0].termine = 1;
 	proc[0].temfin = proc[0].Te + proc[0].Ta;
 	proc[0].temAttente = 0;
@@ -54,51 +55,44 @@ void Sjf(int nb, process *proc)
 	procAffichage[0].Ta = proc[0].Ta;
 	procAffichage[0].Te = proc[0].Te;
 	procAffichage[0].temfin = proc[0].temfin;
-	// Increase the current time by the termine process time
+
 	printf("\t ");
 	printf("P%d\t\t %dms --> %dms\t\n", proc[0].idProcessus, proc[0].Ta, proc[0].temfin);
-	/* Repeat the number of processes -1 */
+
 	for (i = 1; i < nb; i++)
 	{
-		/* Repeat the number of processes -1 */
 		for (j = 1; j < nb; j++)
 		{
-			/* If the process has already been termine */
+			/* si le processus a terminé */
 			if (proc[j].termine == 1)
 				continue;
-			// go to next loop
 
-			/* If the process has not yet termine */
+			/* si le processus n'a pas encore terminé */
 			else
 			{
 				min = j;
-				// Initialize the min variable
+
 				break;
-				// escape loop
 			}
 		}
 
-		/* Repeat the number of processes -1 */
 		for (j = 1; j < nb; j++)
 		{
-			/* Search for processes with minimum working time */
+
 			if ((proc[j].termine == 0) && (proc[j].Ta <= curr_time) && (proc[j].Te < proc[min].Te))
 			{
-				min = j;
-				// update the minimum working process
+				min = j; // mettre à jour le processus de minimum Te
 			}
 		}
 
 		proc[min].temAttente = curr_time - proc[min].Ta;
-		// Calculate the waiting time of the process to run
-		proc[min].termine = 1;
-		// change the execution process completion state
+
+		proc[min].termine = 1; // processus a terminé
 
 		curr_time += proc[min].Te;
-		// Incremented by the execution time of the current time process
 
-		proc[min].temfin = curr_time;
-		// Calculate process return time
+		proc[min].temfin = curr_time; // calcul temps fin
+
 		printf("\t ");
 		printf("P%d\t\t %dms --> %dms\t\n", proc[min].idProcessus, proc[min].Ta + proc[min].temAttente, proc[min].temfin);
 
@@ -107,6 +101,7 @@ void Sjf(int nb, process *proc)
 		procAffichage[i].Te = proc[min].Te;
 		procAffichage[i].temfin = proc[min].temfin;
 	}
+	//diagramme de gantt
 	printf("\n");
 	printf("****Diagramme de GANTT****\n");
 	printf("\n");
@@ -122,7 +117,6 @@ void Sjf(int nb, process *proc)
 
 	printf("\n\t|");
 
-
 	for (i = 0; i < nb; i++)
 	{
 		for (j = 0; j < procAffichage[i].Te - 1; j++)
@@ -137,7 +131,6 @@ void Sjf(int nb, process *proc)
 	}
 
 	printf("\n\t ");
-
 
 	for (i = 0; i < nb; i++)
 	{

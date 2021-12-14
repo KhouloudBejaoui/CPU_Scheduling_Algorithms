@@ -32,7 +32,7 @@ int Nombre_processus(char *algo)
 			{
 				nb++;
 			}
-		} while (fgetc(fichier) != EOF);
+		} while (c != EOF);
 	}
 	else
 	{
@@ -62,7 +62,7 @@ void extraction(process **proc, char *algo)
 				i++;
 			}
 
-		} while (fgetc(fichier) != EOF);
+		} while (c != EOF);
 	}
 }
 

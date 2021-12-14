@@ -37,7 +37,7 @@ void priorite(int nb, process *proc)
 	}
 	printf("\n");
 	/*afficher lA DATE DE FIN D'EXECUTION DE CHAQUE  processuss*/
-	printf("****date de debut et de fin d'execution des %d processus****\n", nb);
+	printf("****Date de debut et de fin d'execution des %d processus****\n", nb);
 	printf("\n");
 	printf("\t ");
 	printf("Processus\t Tdeb\t Tfin\n");
@@ -45,61 +45,54 @@ void priorite(int nb, process *proc)
 
 	/*Calcul*/
 
-	/* Calculate the time of the first running process */
+	/* calcul du 1er processus */
 	proc[0].termine = 1;
 	proc[0].temfin = proc[0].Te + proc[0].Ta;
 	proc[0].temAttente = 0;
 
 	curr_time = proc[0].temfin;
-	// Increase the current time by the termine process time
+
 	printf("\t ");
 	printf("P%d\t\t %dms --> %dms\t\n", proc[0].idProcessus, proc[0].Ta, proc[0].temfin);
 	procAffichage[0].idProcessus = proc[0].idProcessus;
 	procAffichage[0].Ta = proc[0].Ta;
 	procAffichage[0].Te = proc[0].Te;
 	procAffichage[0].temfin = proc[0].temfin;
-	/* Repeat the number of processes -1 */
+
 	for (i = 1; i < nb; i++)
 	{
-		/* Repeat the number of processes -1 */
+
 		for (j = 1; j < nb; j++)
 		{
-			/* If the process has already been termine */
+			/* si le processus a terminé */
 			if (proc[j].termine == 1)
 				continue;
-			// go to next loop
 
-			/* If the process has not yet termine */
+			/* si le processus n'a pas encore terminé */
 			else
 			{
 				max = j;
-				// Initialize the min variable
+
 				break;
-				// escape loop
 			}
 		}
 
-		/* Repeat the number of processes -1 */
 		for (j = 1; j < nb; j++)
 		{
-			/* Search for processes with maximum priority*/
 			if ((proc[j].termine == 0) && (proc[j].Ta <= curr_time) && (proc[j].Pr > proc[max].Pr))
 			{
-				max = j;
-				// update the maximum working process
+				max = j; // mettre à jour le processus de maximum priorité
 			}
 		}
 
 		proc[max].temAttente = curr_time - proc[max].Ta;
-		// Calculate the waiting time of the process to run
-		proc[max].termine = 1;
-		// change the execution process completion state
+
+		proc[max].termine = 1; // processus a terminé
 
 		curr_time += proc[max].Te;
-		// Incremented by the execution time of the current time process
 
-		proc[max].temfin = curr_time;
-		// Calculate process return time
+		proc[max].temfin = curr_time; // calcul temps fin
+
 		printf("\t ");
 		printf("P%d\t\t %dms --> %dms\t\n", proc[max].idProcessus, proc[max].Ta + proc[max].temAttente, proc[max].temfin);
 		procAffichage[i].idProcessus = proc[max].idProcessus;
@@ -107,6 +100,7 @@ void priorite(int nb, process *proc)
 		procAffichage[i].Te = proc[max].Te;
 		procAffichage[i].temfin = proc[max].temfin;
 	}
+	//diagramme de gantt
 	printf("\n");
 	printf("****Diagramme de GANTT****\n");
 	printf("\n");

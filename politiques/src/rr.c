@@ -41,7 +41,7 @@ void RR(int nb, process *proc)
   }
   printf("\n");
   /*afficher lA DATE DE FIN D'EXECUTION DE CHAQUE  processuss*/
-  printf("****date de debut et de fin d'execution des %d processus****\n", nb);
+  printf("****Date de debut et de fin d'execution des %d processus****\n", nb);
   printf("\n");
   printf("\t");
   printf("Processus\t Tdeb\t Tfin\n");
@@ -93,6 +93,7 @@ void RR(int nb, process *proc)
     if (termine == 1)
       break;
   }
+  //diagramme de gantt
   printf("\n");
   printf("****Diagramme de GANTT****\n");
   printf("\n");

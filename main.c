@@ -18,10 +18,10 @@ int main(int argc, char *argv[])
 
 	if (d)
 	{
-    printf("\t+-----------------------+\n");
-    printf("\t|\t  Menu\t\t|\n");
-    printf("\t+-----------------------+\n");
-	printf("\t|\t\t\t|\n");
+		printf("\t+-----------------------+\n");
+		printf("\t|\t  Menu\t\t|\n");
+		printf("\t+-----------------------+\n");
+		printf("\t|\t\t\t|\n");
 		while ((dir = readdir(d)) != NULL)
 		{
 			if (strstr(dir->d_name, ".") == NULL)
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 			}
 		}
 		closedir(d);
-    printf("\t+-----------------------+\n");
+		printf("\t+-----------------------+\n");
 	}
 
 	//choisir à partir du clavier
